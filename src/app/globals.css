@@ -1,0 +1,731 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --o: #f58220;
+  --n: #12406e;
+  --tx: #f3f7f4;
+  --mu: #b9c9c1;
+  --gl: rgba(255, 255, 255, 0.08);
+  --ln: rgba(255, 255, 255, 0.15);
+  --in: rgba(0, 0, 0, 0.3);
+  --rb: #2a2a2a;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --tx: #0f2a24;
+    --mu: #46605a;
+    --gl: rgba(255, 255, 255, 0.65);
+    --ln: rgba(255, 255, 255, 0.95);
+    --in: rgba(255, 255, 255, 0.90);
+    --rb: #e6f3ee;
+    color-scheme: light;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  scroll-behavior: smooth;
+}
+
+/* Text Selection Colors */
+::selection {
+  background-color: var(--o);
+  color: #fff;
+}
+
+::-moz-selection {
+  background-color: var(--o);
+  color: #fff;
+}
+
+/* Performance optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+  cursor: inherit;
+}
+
+/* Custom Cursor Styles */
+body {
+  cursor: default;
+}
+
+a, button, .btn, .chip, input[type="button"], input[type="submit"], 
+[role="button"], .cursor-pointer {
+  cursor: pointer;
+}
+
+input, textarea, select, .inp {
+  cursor: text;
+}
+
+input[type="checkbox"], input[type="radio"] {
+  cursor: pointer;
+}
+
+input:disabled, button:disabled, .btn:disabled {
+  cursor: not-allowed;
+}
+
+.line, .glass.cursor-pointer, [onclick] {
+  cursor: pointer;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #1a1a1a;
+  color: var(--tx);
+  font: 15px/1.5 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background video container */
+.video-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.video-background video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%) translateZ(0);
+  object-fit: cover;
+}
+
+.video-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 20, 20, 0.85) 0%,
+    rgba(20, 20, 20, 0.75) 50%,
+    rgba(20, 20, 20, 0.85) 100%
+  );
+  z-index: 1;
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background: 
+      linear-gradient(
+        to bottom,
+        rgba(233, 244, 239, 0.92) 0%,
+        rgba(233, 244, 239, 0.85) 50%,
+        rgba(233, 244, 239, 0.92) 100%
+      ),
+      url('/bg.jpg') center/cover fixed;
+  }
+}
+
+h1 {
+  font-size: clamp(26px, 4vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0 0 12px;
+}
+
+p {
+  margin: 0 0 10px;
+  color: var(--mu);
+  line-height: 1.6;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  word-wrap: break-word;
+}
+
+/* Prevent long text overflow */
+h1, h2, h3, h4, h5, h6 {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Smooth text rendering */
+body, input, textarea, button, select {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+:focus-visible {
+  outline: 2px solid var(--o);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .glass {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 
+                0 2px 8px rgba(0, 0, 0, 0.15);
+    /* Prevent text overflow */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Sticky header enhancement */
+  header.sticky {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 
+                0 2px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .cream {
+    background: #f1efd9;
+    color: #1d2b25;
+    border-color: #fff;
+  }
+
+  .cream p {
+    color: #445;
+  }
+
+  .pink {
+    background: #f6dce2;
+    color: #2b1d22;
+    border-color: #fff;
+  }
+
+  .pink p {
+    color: #523;
+  }
+
+  .btn {
+    font: inherit;
+    cursor: pointer;
+    border: 1px solid var(--ln);
+    background: var(--gl);
+    color: var(--tx);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+  }
+
+  .btn:active {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    transform: translateY(0);
+    transition: all 0.1s ease;
+  }
+
+  .btn-p {
+    background: var(--o);
+    border-color: var(--o);
+    color: #fff;
+  }
+
+  .btn-p:hover {
+    background: #ff9033;
+    border-color: #ff9033;
+    box-shadow: 0 6px 16px rgba(245, 130, 32, 0.4);
+    transform: translateY(-2px);
+  }
+
+  .btn-p:active {
+    background: #e67820;
+    transform: translateY(0);
+  }
+
+  .btn-sm {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+
+  .inp {
+    font: inherit;
+    color: var(--tx);
+    background: var(--in);
+    border: 1px solid var(--ln);
+    border-radius: 12px;
+    padding: 10px 14px;
+    min-width: 0;
+    transition: all 0.2s ease;
+    cursor: text;
+    caret-color: var(--o); /* Orange blinking cursor */
+  }
+
+  .inp:focus {
+    outline: 2px solid var(--o);
+    outline-offset: 0;
+    border-color: var(--o);
+    cursor: text;
+  }
+
+  .inp option {
+    color: #000;
+    cursor: pointer;
+  }
+
+  .chip {
+    font: inherit;
+    cursor: pointer;
+    border: 1px solid var(--ln);
+    background: var(--gl);
+    color: var(--tx);
+    border-radius: 999px;
+    padding: 7px 16px;
+    font-weight: 600;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .chip:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .chip.on {
+    background: var(--o);
+    border-color: var(--o);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(245, 130, 32, 0.3);
+  }
+
+  .chip.on:hover {
+    background: #ff9033;
+    border-color: #ff9033;
+    transform: translateY(-1px);
+  }
+
+  .chip:active {
+    transform: scale(0.97);
+    transition: all 0.1s ease;
+  }
+
+  .live {
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+    font-size: 12px;
+    padding: 5px 12px;
+    border-radius: 999px;
+    background: var(--in);
+    white-space: nowrap;
+  }
+
+  .live i {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #2fbf6b;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .live.off i {
+    background: #f5a623;
+    animation: none;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
+  }
+
+  .row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--ln);
+    transition: background 0.2s ease;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    min-height: 40px; /* Prevent cutting */
+  }
+
+  .line:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .line:last-child {
+    border-bottom: none;
+  }
+
+  .line > span {
+    flex: 1;
+    min-width: 0; /* Allow text truncation if needed */
+  }
+
+  .ring {
+    --p: 50;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: conic-gradient(var(--o) calc(var(--p) * 1%), var(--ln) 0);
+    display: grid;
+    place-items: center;
+    margin: 0 auto 6px;
+    transition: transform 0.3s ease;
+  }
+
+  .ring:hover {
+    transform: scale(1.05);
+  }
+
+  .ring b {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--rb);
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+  }
+
+  .bar {
+    height: 10px;
+    border-radius: 99px;
+    background: var(--ln);
+    overflow: hidden;
+  }
+
+  .bar i {
+    display: block;
+    height: 100%;
+    background: var(--o);
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .kpi {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .fc {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    font-size: 12px;
+  }
+
+  .fc div {
+    flex: 1;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.07);
+    border-radius: 10px;
+    padding: 6px 4px;
+    transition: background 0.2s ease;
+  }
+
+  .fc div:hover {
+    background: rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Leaflet Map Styling */
+.leaflet-container {
+  font: inherit;
+  background: #f8f9fa;
+  border-radius: 16px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Better map controls styling */
+.leaflet-control-zoom a {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  color: #333 !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  backdrop-filter: blur(10px);
+  transition: all 0.2s ease;
+}
+
+.leaflet-control-zoom a:hover {
+  background-color: #fff !important;
+  border-color: #f58220 !important;
+  color: #f58220 !important;
+  transform: scale(1.05);
+}
+
+.leaflet-control-zoom a:active {
+  transform: scale(0.95);
+}
+
+/* Better tooltip styling */
+.leaflet-tooltip {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border: 2px solid #f58220 !important;
+  border-radius: 8px !important;
+  padding: 6px 10px !important;
+  font-weight: 600 !important;
+  color: #0b2a24 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+  backdrop-filter: blur(10px);
+  animation: tooltipFadeIn 0.2s ease;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before {
+  border-top-color: #f58220 !important;
+  border-bottom-color: #f58220 !important;
+}
+
+/* Smoother map animations */
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.leaflet-marker-icon:hover {
+  transform: scale(1.1);
+  z-index: 1000 !important;
+}
+
+/* Better attribution styling */
+.leaflet-control-attribution {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px);
+  font-size: 10px !important;
+  padding: 2px 6px !important;
+}
+
+/* Navigation link smooth transitions */
+nav a {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: translateY(-1px);
+}
+
+nav a:active {
+  transform: translateY(0);
+}
+
+/* Card hover effects */
+.glass {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.loading {
+  background: linear-gradient(
+    to right,
+    var(--gl) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    var(--gl) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Fade in animation for content */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* Print styles */
+@media print {
+  .noprint,
+  header,
+  footer {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+    color: #000;
+  }
+
+  .glass {
+    background: #fff;
+    border-color: #ccc;
+    color: #000;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+
+  p {
+    color: #333;
+  }
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--o);
+  outline-offset: 2px;
+}
+
+/* Better image loading */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent layout shift */
+img[width][height] {
+  height: auto;
+}
+
+/* Fix grid and flex container overflow */
+.grid {
+  overflow: visible;
+}
+
+/* Prevent content cutting in cards */
+.glass > *:not([class*="absolute"]) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure proper stacking */
+.glass {
+  position: relative;
+  z-index: auto;
+}
+
+/* Header sticky override */
+header.glass {
+  position: sticky !important;
+  z-index: 100 !important;
+}
